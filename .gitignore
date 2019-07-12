@@ -1,0 +1,12 @@
+target/
+.settings/
+.classpath
+.project
+bin/
+.idea/
+*.iml
+rebel.xml
+.rebel.xml.bak
+wwis-web/src/main/resources/local
+rebel-remote.xml
+.rebel-remote.xml.baklocal\
