@@ -44,10 +44,10 @@ public class ApiDocDaoImpl implements ApiDocDao {
                 StringBuffer docContent = new StringBuffer();
                 StringBuffer returnJson = new StringBuffer();
                 StringBuffer inJson = new StringBuffer();
-                docContent.append("列表\n");
-                docContent.append("请求地址:"+tableName+"\n");
-                docContent.append("请求方法:GET\n");
-                docContent.append("出参:\n");
+                docContent.append("##列表\n");
+                docContent.append("###请求地址:"+tableName+"\n");
+                docContent.append("####请求方法:GET\n\n");
+                docContent.append("#####出参:\n\n");
                 docContent.append("|字段名称|类型|长度|字段描述|\n");
                 docContent.append("|:----:|:----:|:----:|:----:|\n");
 //                inJson.append("字段名\t\t\t\t\trealtion\t\t\t\t\t数据类型\t\t\t\t字段长度\t\t\t\t是否为空\t\t\t\t字段描述\n");
