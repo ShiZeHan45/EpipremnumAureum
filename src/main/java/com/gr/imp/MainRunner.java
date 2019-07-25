@@ -2,7 +2,6 @@ package com.gr.imp;
 
 
 import com.gr.in.*;
-import com.szh.generate.generatebeanfilein.*;
 
 /**
  * @program: wwis-kunming

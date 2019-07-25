@@ -1,5 +1,7 @@
 package com.gr.utils;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -46,7 +48,7 @@ public class ConfigUtil {
     static{
         try {
 //得到配置文件的流信息
-            InputStream in = ConfigUtil.class.getResourceAsStream("../config.properties");
+            InputStream in =  new FileInputStream(new ConfigUtil().getClass().getClassLoader().getResource("config.properties").getFile());
 //加载properties文件的工具类
             Properties pro = new Properties();
 //工具类去解析配置文件的流信息
@@ -85,5 +87,7 @@ public class ConfigUtil {
         }
     }
 
-
+    public static void main(String[] args) {
+        System.out.println(new ConfigUtil().getClass().getClassLoader().getResource("config.properties").getPath());
+    }
 }

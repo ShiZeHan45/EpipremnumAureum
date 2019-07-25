@@ -1,9 +1,8 @@
 package com.gr.imp;
 
 
-import com.gr.utils.*;
 import com.gr.in.ControllerAutoDao;
-import com.szh.generate.generatebeanfileutils.*;
+import com.gr.utils.*;
 
 import java.util.Iterator;
 import java.util.List;

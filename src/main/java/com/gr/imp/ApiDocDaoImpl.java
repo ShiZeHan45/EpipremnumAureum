@@ -1,8 +1,7 @@
 package com.gr.imp;
 
-import com.gr.utils.*;
 import com.gr.in.ApiDocDao;
-import com.szh.generate.generatebeanfileutils.*;
+import com.gr.utils.*;
 
 import java.util.Iterator;
 import java.util.List;
@@ -45,15 +44,13 @@ public class ApiDocDaoImpl implements ApiDocDao {
                 StringBuffer docContent = new StringBuffer();
                 StringBuffer returnJson = new StringBuffer();
                 StringBuffer inJson = new StringBuffer();
-                docContent.append("auto generate / all by szh\n");
                 docContent.append("列表\n");
-                docContent.append("URL:/api/"+tableName+"\n");
-                docContent.append("METHOD:GET\n");
-                docContent.append("RETURN:\n");
-                returnJson.append("------------------------------------------------------------------\n");
-                returnJson.append("字段名\t\t\t\t\trealtion\t\t\t\t\t数据类型\t\t\t\t字段长度\t\t\t\t是否为空\t\t\t\t字段描述\n");
-                inJson.append("------------------------------------------------------------------\n");
-                inJson.append("字段名\t\t\t\t\trealtion\t\t\t\t\t数据类型\t\t\t\t字段长度\t\t\t\t是否为空\t\t\t\t字段描述\n");
+                docContent.append("请求地址:"+tableName+"\n");
+                docContent.append("请求方法:GET\n");
+                docContent.append("出参:\n");
+                docContent.append("|字段名称|类型|长度|字段描述|\n");
+                docContent.append("|:----:|:----:|:----:|:----:|\n");
+//                inJson.append("字段名\t\t\t\t\trealtion\t\t\t\t\t数据类型\t\t\t\t字段长度\t\t\t\t是否为空\t\t\t\t字段描述\n");
                 for (int j = 0; j < columns.size(); j++) {
                     Column column = columns.get(j);
                     String codeName = column.getColumnName();
@@ -63,38 +60,42 @@ public class ApiDocDaoImpl implements ApiDocDao {
                     int columnSize = column.getColumnSize();
                     boolean isNull = column.isNull();
                     String dateType =   DataTypeUtil.getType(column.getDbTypeName().toLowerCase());
-                    if(remark.indexOf("dict")>=0){
-                        returnJson.append(adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer(dateType),25)+adjustStr(new StringBuffer(columnSize+""),25)+adjustStr(new StringBuffer(isNull?"true":"false"),25)+adjustStr(new StringBuffer(remark),25)+"\n");
-                        returnJson.append(adjustStr(new StringBuffer(code+"Name"),25)+adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer(dateType),25)+adjustStr(new StringBuffer(columnSize+""),25)+adjustStr(new StringBuffer(isNull?"true":"false"),25)+adjustStr(new StringBuffer(remark),25)+"\n");
-                    }else{
-                        returnJson.append(adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer("否"),25)+adjustStr(new StringBuffer(dateType),25)+adjustStr(new StringBuffer(columnSize+""),25)+adjustStr(new StringBuffer(isNull?"true":"false"),25)+adjustStr(new StringBuffer(remark),25)+"\n");
-                    }
-                    if(remark.indexOf("dict")>=0){
-                        inJson.append(adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer(dateType),25)+adjustStr(new StringBuffer(columnSize+""),25)+adjustStr(new StringBuffer(isNull?"true":"false"),25)+adjustStr(new StringBuffer(remark),25)+"\n");
-                    }else{
-                        inJson.append(adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer("否"),25)+adjustStr(new StringBuffer(dateType),25)+adjustStr(new StringBuffer(columnSize+""),25)+adjustStr(new StringBuffer(isNull?"true":"false"),25)+adjustStr(new StringBuffer(remark),25)+"\n");
-                    }
+                    docContent.append("|"+code+"|"+(dateType.equals("Byte")?code:dateType)+"|"+columnSize+"|"+remark+"|\n");
+
+
+
+//                    if(remark.indexOf("dict")>=0){
+//                        returnJson.append(adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer(dateType),25)+adjustStr(new StringBuffer(columnSize+""),25)+adjustStr(new StringBuffer(isNull?"true":"false"),25)+adjustStr(new StringBuffer(remark),25)+"\n");
+//                        returnJson.append(adjustStr(new StringBuffer(code+"Name"),25)+adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer(dateType),25)+adjustStr(new StringBuffer(columnSize+""),25)+adjustStr(new StringBuffer(isNull?"true":"false"),25)+adjustStr(new StringBuffer(remark),25)+"\n");
+//                    }else{
+//                        returnJson.append(adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer("否"),25)+adjustStr(new StringBuffer(dateType),25)+adjustStr(new StringBuffer(columnSize+""),25)+adjustStr(new StringBuffer(isNull?"true":"false"),25)+adjustStr(new StringBuffer(remark),25)+"\n");
+//                    }
+//                    if(remark.indexOf("dict")>=0){
+//                        inJson.append(adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer(dateType),25)+adjustStr(new StringBuffer(columnSize+""),25)+adjustStr(new StringBuffer(isNull?"true":"false"),25)+adjustStr(new StringBuffer(remark),25)+"\n");
+//                    }else{
+//                        inJson.append(adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer("否"),25)+adjustStr(new StringBuffer(dateType),25)+adjustStr(new StringBuffer(columnSize+""),25)+adjustStr(new StringBuffer(isNull?"true":"false"),25)+adjustStr(new StringBuffer(remark),25)+"\n");
+//                    }
 
 
                 }
-                docContent.append(returnJson);
-                docContent.append("新增\n");
-                docContent.append("URL:/api/"+tableName+"\n");
-                docContent.append("METHOD:POST\n");
-                docContent.append("INJSON:\n");
-                docContent.append(inJson);
-                docContent.append("编辑\n");
-                docContent.append("URL:/api/"+tableName+"/id\n");
-                docContent.append("METHOD:PATCH\n");
-                docContent.append("INJSON:\n");
-                docContent.append(inJson);
-                docContent.append("删除\n");
-                docContent.append("URL:/api/"+tableName+"/id\n");
-                docContent.append("METHOD:DELETE\n");
+//                docContent.append(returnJson);
+//                docContent.append("新增\n");
+//                docContent.append("URL:/api/"+tableName+"\n");
+//                docContent.append("METHOD:POST\n");
+//                docContent.append("INJSON:\n");
+//                docContent.append(inJson);
+//                docContent.append("编辑\n");
+//                docContent.append("URL:/api/"+tableName+"/id\n");
+//                docContent.append("METHOD:PATCH\n");
+//                docContent.append("INJSON:\n");
+//                docContent.append(inJson);
+//                docContent.append("删除\n");
+//                docContent.append("URL:/api/"+tableName+"/id\n");
+//                docContent.append("METHOD:DELETE\n");
                 /**
                  * 生成文件
                  */
-                FileUtil.createFileAtPath(path+"/", fileName+".txt", docContent.toString());
+                FileUtil.createFileAtPath(path+"/", fileName+".md", docContent.toString());
             }
             return true;
         }

@@ -28,7 +28,7 @@ public class DataSourceUtil {
     static{
         try {
 //得到配置文件的流信息
-            InputStream in = new FileInputStream(new File("D:/config.properties"));
+            InputStream in = new FileInputStream(new DataSourceUtil().getClass().getClassLoader().getResource("config.properties").getFile());
 //加载properties文件的工具类
             Properties pro = new Properties();
 //工具类去解析配置文件的流信息

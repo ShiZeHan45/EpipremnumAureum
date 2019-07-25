@@ -176,10 +176,10 @@ public class DbInfoUtil {
         try {
             Properties props = new Properties();
             props.put("remarksReporting", "true");
-            props.put("user", "dbuser");
-            props.put("password", "dbuser");
+            props.put("user",user);
+            props.put("password",pwd);
             Class.forName(driver);
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/kunming", props);
+            conn = DriverManager.getConnection(url, props);
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
