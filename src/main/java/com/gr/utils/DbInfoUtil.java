@@ -219,7 +219,7 @@ public class DbInfoUtil {
         */
 //        DbInfoUtil dbInfoUtil = new DbInfoUtil();
         Properties props = new Properties();
-        InputStream in = DbInfoUtil.class.getResourceAsStream("D:\\config.properties");
+        InputStream in = DbInfoUtil.class.getResourceAsStream("src/main/resources/config.properties");
         try {
             props.load(in);
             in.close();

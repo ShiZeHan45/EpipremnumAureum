@@ -53,14 +53,18 @@ public class ServiceAutoDaoImpl implements ServiceAutoDao {
                 importCon.append("import" + "\t" + ConfigUtil.formPackage + "." + baseName + "Form" + ";\n");
                 importCon.append("import" + "\t" + ConfigUtil.repositoryPackage + "." + baseName + "Repository;\n");
                 importCon.append("import" + "\t" + "gddxit.waterhub.cloud.results.BaseResult;\n");
+                importCon.append("import" + "\t" + "gddxit.waterhub.data.form.PageForm;\n");
+                importCon.append("import" + "\t" + "gddxit.waterhub.cloud.expection.BusinessException;\n");
+                importCon.append("import" + "\t" + "org.slf4j.Logger;;\n");
+                importCon.append("import" + "\t" + "org.slf4j.LoggerFactory;\n");
                 importCon.append("import" + "\t" + "org.springframework.beans.factory.annotation.Autowired;\n");
                 importCon.append("import" + "\t" + "gddxit.waterhub.security.client.SecurityContextUtils;\n");
                 importCon.append("import" + "\t" + "org.springframework.data.jpa.domain.Specification;\n");
                 importCon.append("import" + "\t" + "org.springframework.transaction.annotation.Transactional;\n");
                 importCon.append("import" + "\t" + "org.springframework.stereotype.Service;\n");
-                importCon.append("import" + "\t" + "java.util.List;\n");
                 importCon.append("import" + "\t" + "java.util.HashMap;\n");
-                importCon.append("import" + "\t" + "com.gddxit.wwis.common.utils.LoggerUtil;\n");
+                importCon.append("import" + "\t" + "java.util.Map;\n");
+                importCon.append("import" + "\t" + "java.util.Optional;\n");
 //                importCon.append("/**\n*auto generate all by szh\n*\n*/\n\n");
                 importCon.append("@Service\n");
                 String className = "public" + "\t" + "class" + "\t" + fileName + " extends" + " JPAEntityService<" + baseNameBean + ">{\n\n";
@@ -83,7 +87,7 @@ public class ServiceAutoDaoImpl implements ServiceAutoDao {
                 classCon.append("\t" + baseNameBean + "\t" + tableName + "=new\t" + baseNameBean + "();\n");
                 classCon.append("\t" + "BeanUtils.copyProperties(" + lowForm + "," + tableName + ");\n");
                 classCon.append("\t" + tableName + "Repository" + ".save(" + tableName + ");\n");
-                classCon.append("\t" + "logger.debug(\"用户【{}】新增信息【{}】\",SecurityContextUtils.loginUser()," + baseNameBean + ");\n");
+                classCon.append("\t" + "logger.debug(\"用户【{}】新增信息【{}】\",SecurityContextUtils.loginUser()," + tableName + ");\n");
                 classCon.append("\t" + "return " + tableName + ";\n");
                 classCon.append("}\n\n");
 
@@ -95,7 +99,7 @@ public class ServiceAutoDaoImpl implements ServiceAutoDao {
                 classCon.append("public" + "\tBaseResult\tedit(" + baseName + "Form\t" + lowForm + "){\n");
                 classCon.append("\t" + "Optional<" + baseNameBean + ">  " + tableName + "Optional = " + tableName + "Repository.findById(" + lowForm + ".getId());\n");
                 classCon.append("\t" + baseNameBean + "\t" + tableName + "\t =" + tableName + "Optional.orElseThrow(() -> new BusinessException(\"找不到对应记录\"));");
-                classCon.append("\t" + "BeanUtils.copyProperties(" + lowForm + "," + tableName + ",id);\n");
+                classCon.append("\t" + "BeanUtils.copyProperties(" + lowForm + "," + tableName + ",\"id\");\n");
                 classCon.append("\t" + tableName + "Repository" + ".save(" + tableName + ");\n");
                 classCon.append("\t" + "logger.debug(\"用户【{}】编辑信息【编辑前{} 编辑后{}】\",SecurityContextUtils.loginUser()," + lowForm + "," + tableName + ");\n");
                 classCon.append("\t" + "return new BaseResult(" + tableName + ");\n");
@@ -106,7 +110,7 @@ public class ServiceAutoDaoImpl implements ServiceAutoDao {
                  * 删除
                  */
                 classCon.append("@Transactional\n");
-                classCon.append("public" + "\tvoid\tdelete(int id){\n");
+                classCon.append("public" + "\tvoid\tdelete(Integer id){\n");
                 classCon.append("\t" + "Optional<" + baseNameBean + ">  " + tableName + "Optional = " + tableName + "Repository.findById(id);\n");
                 classCon.append("\t" + baseNameBean + "\t" + tableName + "\t =" + tableName + "Optional.orElseThrow(() -> new BusinessException(\"找不到对应记录\"));");
                 classCon.append("\t" + tableName + "Repository" + ".delete(" + tableName + ");\n");
@@ -120,7 +124,14 @@ public class ServiceAutoDaoImpl implements ServiceAutoDao {
                 classCon.append("public" + "\tMap<String, Object>\tlist(PageForm\tpageForm" + "){\n");
                 classCon.append("\t" + "Map<String, Object> resultMap = new HashMap();\n");
                 classCon.append("\t" + "Map<String, String> paramKeyMap = new HashMap();\n");
-                classCon.append("\t" + "return this.page(pageForm, paramKeyMap, " + StringUtils.toLowerCaseFirstOne(baseName) + "Repository" + ", resultMap, new Specification[0]);\n");
+                classCon.append("\t" + "return page(pageForm, paramKeyMap, " + StringUtils.toLowerCaseFirstOne(baseName) + "Repository" + ", resultMap, new Specification[0]);\n");
+                classCon.append("}\n\n");
+
+                /**
+                 * 查询
+                 */
+                classCon.append("public" + "\tBaseResult\tget(Integer\tid" + "){\n");
+                classCon.append("\t return  new BaseResult(" +  tableName + "Repository.findById(id).orElseThrow(() -> new BusinessException(\"找不到对应记录\")));");
                 classCon.append("}\n\n");
 
                 StringBuffer content = new StringBuffer();

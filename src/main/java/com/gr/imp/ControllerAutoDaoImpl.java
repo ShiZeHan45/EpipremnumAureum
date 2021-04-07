@@ -53,10 +53,13 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                 String packageCon ="package"+"\t"+controllerPackage+";\n\n";
                 StringBuffer importCon=new StringBuffer();
                 importCon.append("import"+"\t"+ConfigUtil.formPackage+"."+upBeanName+"Form;\n");
-                importCon.append("import"+"\t"+"gddxit.waterhub.data.form.Pageform;\n");
+                importCon.append("import"+"\t"+"gddxit.waterhub.data.form.PageForm;\n");
                 importCon.append("import"+"\t"+ConfigUtil.serviceImplPackage+"."+baseService+";\n");
                 importCon.append("import"+"\t"+"gddxit.waterhub.cloud.results.BaseResult;\n");
                 importCon.append("import"+"\t"+"org.springframework.beans.factory.annotation.Autowired;\n");
+                importCon.append("import"+"\t"+"org.springframework.validation.annotation.Validated;\n");
+                importCon.append("import"+"\t"+"org.springframework.validation.BindingResult;\n");
+                importCon.append("import"+"\t"+"org.springframework.validation.ObjectError;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.DeleteMapping;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.PutMapping;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.GetMapping;\n");
@@ -120,8 +123,8 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
 //                 * 编辑
 //                 */
 //                classCon.append("@ApiAction(name = \"编辑"+ConfigUtil.moudleName+"\")\n");
-                classCon.append("@PutMapping(path = {\"/edit/{id:"+"\\"+"\\"+"d+}\"})\n");
-                classCon.append("public BaseResult edit(@PathVariable(\"id\") int id, @RequestBody @Validated "+baseForm+" form, BindingResult errForm,  HttpServletRequest request, HttpServletResponse response) {\n");
+                classCon.append("@PutMapping(path = {\"/{id:"+"\\"+"\\"+"d+}\"})\n");
+                classCon.append("public BaseResult edit(@PathVariable(\"id\") int id, @RequestBody @Validated "+baseForm+" form, BindingResult errForm) {\n");
                 classCon.append("\t"+" BaseResult result = new BaseResult();\n");
                 classCon.append("\t"+" if (errForm.hasErrors()) {\n");
                 classCon.append("\t\t"+"for (ObjectError error : errForm.getAllErrors()) {\n");
@@ -140,7 +143,7 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
 //                classCon.append("@ApiAction(name = \"删除"+ConfigUtil.moudleName+"\")\n");
                 classCon.append("@DeleteMapping(path = {\"/{id:"+"\\"+"\\"+"d+}\"})\n");
                 classCon.append("public BaseResult del(@PathVariable(\"id\") int id) {\n");
-                classCon.append("\t return "+lowService+".delete(id);\n");
+                classCon.append("\t"+lowService+".delete(id);\n");
                 classCon.append("\t return new BaseResult();\n");
                 classCon.append("}\n\n");
 ///**

@@ -63,35 +63,28 @@ public class ApiDocDaoImpl implements ApiDocDao {
                     docContent.append("|"+code+"|"+(dateType.equals("Byte")?code:dateType)+"|"+columnSize+"|"+remark+"|\n");
 
 
-
-//                    if(remark.indexOf("dict")>=0){
-//                        returnJson.append(adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer(dateType),25)+adjustStr(new StringBuffer(columnSize+""),25)+adjustStr(new StringBuffer(isNull?"true":"false"),25)+adjustStr(new StringBuffer(remark),25)+"\n");
-//                        returnJson.append(adjustStr(new StringBuffer(code+"Name"),25)+adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer(dateType),25)+adjustStr(new StringBuffer(columnSize+""),25)+adjustStr(new StringBuffer(isNull?"true":"false"),25)+adjustStr(new StringBuffer(remark),25)+"\n");
-//                    }else{
-//                        returnJson.append(adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer("否"),25)+adjustStr(new StringBuffer(dateType),25)+adjustStr(new StringBuffer(columnSize+""),25)+adjustStr(new StringBuffer(isNull?"true":"false"),25)+adjustStr(new StringBuffer(remark),25)+"\n");
-//                    }
-//                    if(remark.indexOf("dict")>=0){
-//                        inJson.append(adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer(dateType),25)+adjustStr(new StringBuffer(columnSize+""),25)+adjustStr(new StringBuffer(isNull?"true":"false"),25)+adjustStr(new StringBuffer(remark),25)+"\n");
-//                    }else{
-//                        inJson.append(adjustStr(new StringBuffer(code),25)+adjustStr(new StringBuffer("否"),25)+adjustStr(new StringBuffer(dateType),25)+adjustStr(new StringBuffer(columnSize+""),25)+adjustStr(new StringBuffer(isNull?"true":"false"),25)+adjustStr(new StringBuffer(remark),25)+"\n");
-//                    }
-
-
                 }
-                docContent.append(returnJson);
-                docContent.append("新增\n");
-                docContent.append("URL:/api/"+tableName+"\n");
-                docContent.append("METHOD:POST\n");
-                docContent.append("INJSON:\n");
-                docContent.append(inJson);
-                docContent.append("编辑\n");
-                docContent.append("URL:/api/"+tableName+"/id\n");
-                docContent.append("METHOD:PUT\n");
-                docContent.append("INJSON:\n");
-                docContent.append(inJson);
-                docContent.append("删除\n");
-                docContent.append("URL:/api/"+tableName+"/id\n");
-                docContent.append("METHOD:DELETE\n");
+                docContent.append("##查询详情\n");
+                docContent.append("###请求地址:\n"+tableName+"/get/{id}\n");
+                docContent.append("####请求方法:\nPOST\n");
+                docContent.append("#####出参:\n与查询列表一致\n");
+
+
+
+//                docContent.append(returnJson);
+                docContent.append("##新增\n");
+                docContent.append("###请求地址:\nip:端口//"+tableName+"\n");
+                docContent.append("####请求方法:\nPOST\n");
+
+//                docContent.append(inJson);
+                docContent.append("##编辑\n");
+                docContent.append("###URL:\nip:端口//"+tableName+"/{id}\n");
+                docContent.append("####METHOD:\nPUT\n");
+
+//                docContent.append(inJson);
+                docContent.append("##删除\n");
+                docContent.append("###请求地址:\nip:端口//"+tableName+"/{id}\n");
+                docContent.append("####请求方法:\nDELETE\n");
                 /**
                  * 生成文件
                  */

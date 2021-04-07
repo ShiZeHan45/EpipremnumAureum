@@ -49,14 +49,9 @@ public class BeanAutoDaoPlusImpl implements BeanAutoDao {
                 String packageCon ="package"+"\t"+beanPackage+";\n\n";
                 StringBuffer importCon=new StringBuffer();
                 importCon.append("import"+"\t"+"javax.persistence.*;\n");
+                importCon.append("import"+" import javax.validation.constraints.*;\n\n");
 
-                importCon.append("import"+" javax.persistence.Entity;\n");
-                importCon.append("import"+" javax.persistence.GeneratedValue;\n");
-                importCon.append("import"+" javax.persistence.GenerationType;\n");
-
-                importCon.append("import"+" javax.persistence.Id;\n\n");
-//                importCon.append("/**\n*auto generate all by szh\n*\n*/\n\n");
-                String beanHead = "@Entity(name= "+entry.getKey()+")\n";
+                String beanHead = "@Entity(name= \""+entry.getKey()+"\")\n";
                 String className ="public"+"\t"+"class"+"\t"+fileName+"{\n\n";
                 StringBuffer classCon =new StringBuffer();
                 StringBuffer gettersCon = new StringBuffer();
