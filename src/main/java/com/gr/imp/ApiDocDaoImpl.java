@@ -46,7 +46,7 @@ public class ApiDocDaoImpl implements ApiDocDao {
                 StringBuffer inJson = new StringBuffer();
                 docContent.append("##列表\n");
                 docContent.append("###请求地址:"+tableName+"\n");
-                docContent.append("####请求方法:GET\n\n");
+                docContent.append("####请求方法:POST\n\n");
                 docContent.append("#####出参:\n\n");
                 docContent.append("|字段名称|类型|长度|字段描述|\n");
                 docContent.append("|:----:|:----:|:----:|:----:|\n");
@@ -78,20 +78,20 @@ public class ApiDocDaoImpl implements ApiDocDao {
 
 
                 }
-//                docContent.append(returnJson);
-//                docContent.append("新增\n");
-//                docContent.append("URL:/api/"+tableName+"\n");
-//                docContent.append("METHOD:POST\n");
-//                docContent.append("INJSON:\n");
-//                docContent.append(inJson);
-//                docContent.append("编辑\n");
-//                docContent.append("URL:/api/"+tableName+"/id\n");
-//                docContent.append("METHOD:PATCH\n");
-//                docContent.append("INJSON:\n");
-//                docContent.append(inJson);
-//                docContent.append("删除\n");
-//                docContent.append("URL:/api/"+tableName+"/id\n");
-//                docContent.append("METHOD:DELETE\n");
+                docContent.append(returnJson);
+                docContent.append("新增\n");
+                docContent.append("URL:/api/"+tableName+"\n");
+                docContent.append("METHOD:POST\n");
+                docContent.append("INJSON:\n");
+                docContent.append(inJson);
+                docContent.append("编辑\n");
+                docContent.append("URL:/api/"+tableName+"/id\n");
+                docContent.append("METHOD:PUT\n");
+                docContent.append("INJSON:\n");
+                docContent.append(inJson);
+                docContent.append("删除\n");
+                docContent.append("URL:/api/"+tableName+"/id\n");
+                docContent.append("METHOD:DELETE\n");
                 /**
                  * 生成文件
                  */
