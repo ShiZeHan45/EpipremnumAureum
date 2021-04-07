@@ -52,22 +52,14 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
 //(实体类）文件内容
                 String packageCon ="package"+"\t"+controllerPackage+";\n\n";
                 StringBuffer importCon=new StringBuffer();
-                importCon.append("import"+"\t"+"com.gddxit.dxbase.base.annotation.ApiAction;\n");
-                importCon.append("import"+"\t"+"com.gddxit.dxbase.base.annotation.ApiController;\n");
                 importCon.append("import"+"\t"+ConfigUtil.formPackage+"."+upBeanName+"Form;\n");
+                importCon.append("import"+"\t"+"gddxit.waterhub.data.form.Pageform;\n");
                 importCon.append("import"+"\t"+ConfigUtil.serviceImplPackage+"."+baseService+";\n");
-                importCon.append("import"+"\t"+ConfigUtil.handlerPackage+"."+upBeanName+"Handler;\n");
-                importCon.append("import"+"\t"+"com.gddxit.dxbase.core.jpa.service.PageForm;\n");
-                importCon.append("import"+"\t"+"com.gddxit.dxbase.core.mvc.AbstractAnnotationController;\n");
-                importCon.append("import"+"\t"+"com.gddxit.dxbase.core.mvc.result.AddResult;\n");
-                importCon.append("import"+"\t"+"com.gddxit.dxbase.core.mvc.result.BaseResult;\n");
-                importCon.append("import"+"\t"+"com.gddxit.dxbase.core.mvc.result.PageResult;\n");
-                importCon.append("import"+"\t"+"javax.servlet.http.HttpServletRequest;\n");
-                importCon.append("import"+"\t"+"javax.servlet.http.HttpServletResponse;\n");
+                importCon.append("import"+"\t"+"gddxit.waterhub.cloud.results.BaseResult;\n");
                 importCon.append("import"+"\t"+"org.springframework.beans.factory.annotation.Autowired;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.DeleteMapping;\n");
+                importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.PutMapping;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.GetMapping;\n");
-                importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.PatchMapping;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.PathVariable;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.PostMapping;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.RequestBody;\n");
@@ -76,51 +68,60 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.RestController;\n");
                 importCon.append("import"+"\t"+"java.util.List;\n");
                 importCon.append("import"+"\t"+"java.util.Map;\n\n");
-                importCon.append("/**\n*auto generate all by szh\n*\n*/\n\n");
                 StringBuffer classHead =new StringBuffer();
                 classHead.append("@RestController\n");
-                classHead.append("@ApiController(\""+ConfigUtil.moudleName+"模块\")\n");
+//                classHead.append("@ApiController(\""+ConfigUtil.moudleName+"模块\")\n");
                 classHead.append("@RequestMapping({\"/"+lowBeanName+"\"})\n");
-                String className ="public"+"\t"+"class"+"\t"+fileName+" extends"+"\t"+"AbstractAnnotationController{\n\n";
+                String className ="public"+"\t"+"class"+"\t"+fileName+"\t"+"{\n\n";
 //拼接(实体类）文件内容
                 StringBuffer classCon =new StringBuffer();
                 classCon.append("@Autowired\n");
                 classCon.append("private"+"\t"+baseService+"\t"+lowService+";\n\n");
 
                 /**
+                 * id查询
+                 */
+//                classCon.append("@ApiAction(name = \""+ConfigUtil.moudleName+"列表\")\n");
+                classCon.append("@PostMapping(path = \"/get/{id:\\\\d+}\")\n");
+                classCon.append("public BaseResult get(@PathVariable(\"id\") Integer id) {\n");
+                classCon.append("\t"+"return "+lowService+".get(id);\n");
+                classCon.append("}\n\n");
+
+                /**
                  * 查询
                  */
-                classCon.append("@ApiAction(name = \""+ConfigUtil.moudleName+"列表\")\n");
-                classCon.append("@GetMapping\n");
-                classCon.append("@ResponseBody\n");
-                classCon.append("public PageResult list(PageForm pageForm) {\n");
-                classCon.append("\t"+"Map<String, Object> data = this."+lowService+".list(pageForm);\n");
-                classCon.append("\t"+"return (new PageResult(data)).setData((new "+upBeanName+"Handler()).page(data));\n");
+                classCon.append("@PostMapping\n");
+                classCon.append("public BaseResult list(PageForm pageform) {\n");
+                classCon.append("\t"+"Map<String, Object> data = "+lowService+".list(pageform);\n");
+                classCon.append("\t"+"return new BaseResult(data);\n");
                 classCon.append("}\n\n");
+
+
+
+
                 /**
                  * 保存
                  */
-                classCon.append("@ApiAction(name = \"保存"+ConfigUtil.moudleName+"\")\n");
-                classCon.append("@PostMapping\n");
-                classCon.append("public BaseResult save(@RequestBody @Validated "+baseForm+" form, BindingResult errForm, HttpServletRequest request, HttpServletResponse response) {\n");
-                classCon.append("\t"+"AddResult result = new AddResult();\n");
+//                classCon.append("@ApiAction(name = \"保存"+ConfigUtil.moudleName+"\")\n");
+                classCon.append("@PostMapping(path=\"/save\")\n");
+                classCon.append("public BaseResult save(@RequestBody @Validated "+baseForm+" form, BindingResult errForm) {\n");
+                classCon.append("\t"+"BaseResult result = new BaseResult();\n");
                 classCon.append("\t"+" if (errForm.hasErrors()) {\n");
                 classCon.append("\t\t"+"for (ObjectError error : errForm.getAllErrors()) {\n");
                 classCon.append("\t\t\t"+" result.addError(error.getDefaultMessage());\n");
                 classCon.append("\t\t\t"+"return result;\n");
                 classCon.append("\t\t"+"}\n");
                 classCon.append("\t"+"}\n");
-                classCon.append("\t"+"this."+lowService+".save(form, result);\n");
-                classCon.append("\t"+"response.setHeader(\"Location\", request.getRequestURL().toString() + \"/\" + result.getData().getId());\n");
-                classCon.append("\t"+"response.setStatus(201);\n");
+                classCon.append("\t"+lowService+".save(form, result);\n");
                 classCon.append("\t"+" return result;\n");
                 classCon.append("}\n\n");
+
 //                /**
 //                 * 编辑
 //                 */
-                classCon.append("@ApiAction(name = \"编辑"+ConfigUtil.moudleName+"\")\n");
-                classCon.append("@PatchMapping(path = {\"/{id:"+"\\"+"\\"+"d+}\"})\n");
-                classCon.append("  public BaseResult edit(@PathVariable(\"id\") int id, @RequestBody @Validated "+baseForm+" form, BindingResult errForm,  HttpServletRequest request, HttpServletResponse response) {\n");
+//                classCon.append("@ApiAction(name = \"编辑"+ConfigUtil.moudleName+"\")\n");
+                classCon.append("@PutMapping(path = {\"/edit/{id:"+"\\"+"\\"+"d+}\"})\n");
+                classCon.append("public BaseResult edit(@PathVariable(\"id\") int id, @RequestBody @Validated "+baseForm+" form, BindingResult errForm,  HttpServletRequest request, HttpServletResponse response) {\n");
                 classCon.append("\t"+" BaseResult result = new BaseResult();\n");
                 classCon.append("\t"+" if (errForm.hasErrors()) {\n");
                 classCon.append("\t\t"+"for (ObjectError error : errForm.getAllErrors()) {\n");
@@ -129,47 +130,21 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                 classCon.append("\t\t"+"}\n");
                 classCon.append("\t"+"}\n");
                 classCon.append("\t"+"form.setId(id);\n");
-                classCon.append("\t"+" this."+lowService+".edit(form, result);\n");
-                classCon.append("\t"+" response.setHeader(\"Location\", request.getRequestURL().toString());\n");
-                classCon.append("\t"+"  response.setStatus(201);\n");
+                classCon.append("\t"+lowService+".edit(form);\n");
                 classCon.append("\t"+" return result;\n");
                 classCon.append("}\n\n");
 
                 /**
                  * 删除
                  */
-                classCon.append("@ApiAction(name = \"删除"+ConfigUtil.moudleName+"\")\n");
+//                classCon.append("@ApiAction(name = \"删除"+ConfigUtil.moudleName+"\")\n");
                 classCon.append("@DeleteMapping(path = {\"/{id:"+"\\"+"\\"+"d+}\"})\n");
                 classCon.append("public BaseResult del(@PathVariable(\"id\") int id) {\n");
-                classCon.append("\t"+"BaseResult result = new BaseResult();\n");
-                classCon.append("\t"+"this."+lowService+".delete(id, result);\n");
-                classCon.append("\t"+"return result;\n");
+                classCon.append("\t return "+lowService+".delete(id);\n");
+                classCon.append("\t return new BaseResult();\n");
                 classCon.append("}\n\n");
 ///**
-// //                 * 编辑
-// //                 */
-//                classCon.append("@ApiAction(name = \"编辑"+ConfigUtil.moudleName+"\")\n");
-//                classCon.append("@PatchMapping(path = {\"/edit/{id:"+"\\"+"\\"+"d+}\"})\n");
-//                classCon.append("  public BaseResult edit(@PathVariable(\"id\") int id, @RequestBody "+baseForm+" form, HttpServletRequest request, HttpServletResponse response) {\n");
-//                classCon.append("\t"+" BaseResult result = new BaseResult();\n");
-//                classCon.append("\t"+"form.setId(id);\n");
-//                classCon.append("\t"+" this."+lowService+".edit(form, result);\n");
-//                classCon.append("\t"+" response.setHeader(\"Location\", request.getRequestURL().toString());\n");
-//                classCon.append("\t"+"  response.setStatus(201);\n");
-//                classCon.append("\t"+" return result;\n");
-//                classCon.append("}\n\n");
-//
-//                /**
-//                 * 删除
-//                 */
-//                classCon.append("@ApiAction(name = \"删除"+ConfigUtil.moudleName+"\")\n");
-//                classCon.append("@PatchMapping(path = {\"/del/{id:"+"\\"+"\\"+"d+}\"})\n");
-//                classCon.append("public BaseResult del(@PathVariable(\"id\") int id, @RequestBody "+baseForm+" form, HttpServletRequest request, HttpServletResponse response) {\n");
-//                classCon.append("\t"+"BaseResult result = new BaseResult();\n");
-//                classCon.append("\t"+"this."+lowService+".delete(id,form, result);\n");
-//                classCon.append("\t"+"return result;\n");
-//                classCon.append("}\n\n");
-
+// //
                 StringBuffer content=new StringBuffer();
                 content.append(packageCon);
                 content.append(importCon.toString());

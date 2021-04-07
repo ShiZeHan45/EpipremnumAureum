@@ -12,7 +12,7 @@ public class DataTypeUtil {
     public static String getType(String dataType){
         String type="";
         if("tinyint".equals(StringUtils.substringBefore(dataType, "("))){
-            type="Byte";
+            type="String";
         }
         if("smallint".equals(StringUtils.substringBefore(dataType, "("))){
             type="Short";
@@ -39,7 +39,7 @@ public class DataTypeUtil {
             type="Float";
         }
         if("decimal".equals(StringUtils.substringBefore(dataType, "("))){
-            type="Double";
+            type="BigDecimal";
         }
         if("char".equals(StringUtils.substringBefore(dataType, "("))){
             type="String";

@@ -50,7 +50,7 @@ public class RepositoryAutoDaoImpl implements RepositoryAutoDao {
                 importCon.append("import"+"\t"+ConfigUtil.beanPackage+"."+baseName+";\n");
                 importCon.append("import"+"\t"+"org.springframework.data.jpa.repository.JpaRepository;\n");
                 importCon.append("import"+"\t"+"org.springframework.data.jpa.repository.JpaSpecificationExecutor;\n");
-                importCon.append("/**\n*auto generate all by szh\n*\n*/\n\n");
+//                importCon.append("/**\n*auto generate all by szh\n*\n*/\n\n");
                 String className ="public"+"\t"+"interface"+"\t"+fileName+" extends JpaRepository<"+baseName+"Bean, Integer>,JpaSpecificationExecutor<"+baseName+"Bean>{\n\n";
 //拼接(实体类）文件内容
                 StringBuffer content=new StringBuffer();

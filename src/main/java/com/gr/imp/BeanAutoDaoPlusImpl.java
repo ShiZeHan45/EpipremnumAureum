@@ -56,8 +56,8 @@ public class BeanAutoDaoPlusImpl implements BeanAutoDao {
                 importCon.append("import"+" javax.persistence.GenerationType;\n");
 
                 importCon.append("import"+" javax.persistence.Id;\n\n");
-                importCon.append("/**\n*auto generate all by szh\n*\n*/\n\n");
-                String beanHead = "@Entity(name= "+ConfigUtil.beanHead+"_TABLE."+entry.getKey()+")\n";
+//                importCon.append("/**\n*auto generate all by szh\n*\n*/\n\n");
+                String beanHead = "@Entity(name= "+entry.getKey()+")\n";
                 String className ="public"+"\t"+"class"+"\t"+fileName+"{\n\n";
                 StringBuffer classCon =new StringBuffer();
                 StringBuffer gettersCon = new StringBuffer();
@@ -155,7 +155,8 @@ public class BeanAutoDaoPlusImpl implements BeanAutoDao {
                                 clasCon = notBlankCon + clasCon;
                             }
 
-                            classCon.append("\t "+"private "+clasCon+"  @Column(name=\""+columns.get(j).getColumnName()+"\")\t "+dateType+"\t "+code+";\n");
+//                            classCon.append("\t "+"private "+clasCon+"  @Column(name=\""+columns.get(j).getColumnName()+"\")\t "+dateType+"\t "+code+";\n");
+                            classCon.append("\t "+"private "+clasCon+" "+dateType+"\t "+code+";\n");
                         }
                         String getSetName=code.substring(0,1).toUpperCase()+code.substring(1);
 //生成get方法

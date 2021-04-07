@@ -48,8 +48,7 @@ public class BeanAutoDaoImpl implements BeanAutoDao {
                 String packageCon ="package"+"\t"+beanPackage+";\n\n";
                 StringBuffer importCon=new StringBuffer();
                 importCon.append("import"+"\t"+"javax.persistence.*;\n");
-                importCon.append("import"+"\t"+"com.gddxit.wwis.union."+ConfigUtil.beanHead+"_TABLE;\n");
-                String beanHead = "@Entity(name= "+ConfigUtil.beanHead+"_TABLE."+list.get(i).getTableName()+")\n";
+                String beanHead = "@Entity(name= "+list.get(i).getTableName()+")\n";
                 String className ="public"+"\t"+"class"+"\t"+fileName+"{\n\n";
                 StringBuffer classCon =new StringBuffer();
                 StringBuffer gettersCon = new StringBuffer();
