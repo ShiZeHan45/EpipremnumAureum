@@ -49,7 +49,7 @@ public class BeanAutoDaoPlusImpl implements BeanAutoDao {
                 String packageCon ="package"+"\t"+beanPackage+";\n\n";
                 StringBuffer importCon=new StringBuffer();
                 importCon.append("import"+"\t"+"javax.persistence.*;\n");
-                importCon.append("import"+" import javax.validation.constraints.*;\n\n");
+                importCon.append("import"+"\tjavax.validation.constraints.*;\n\n");
 
                 String beanHead = "@Entity(name= \""+entry.getKey()+"\")\n";
                 String className ="public"+"\t"+"class"+"\t"+fileName+"{\n\n";
