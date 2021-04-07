@@ -47,8 +47,8 @@ public class FormAutoDaoImpl implements FormAutoDao {
 //(实体类）文件内容
                 String packageCon ="package"+"\t"+formPackage+";\n\n";
                 StringBuffer importCon=new StringBuffer();
-                importCon.append("import"+"\t"+ConfigUtil.beanPackage+"."+baseName+"Bean;\n");
-                String className ="public"+"\t"+"class"+"\t"+fileName+"\textends"+"\t"+baseName+"Bean{\n\n";
+                importCon.append("import"+"\t"+ConfigUtil.beanPackage+"."+baseName+";\n");
+                String className ="public"+"\t"+"class"+"\t"+fileName+"\textends"+"\t"+baseName+"{\n\n";
 //拼接(实体类）文件内容
                 StringBuffer content=new StringBuffer();
                 content.append(packageCon);

@@ -41,7 +41,7 @@ public class BeanAutoDaoPlusImpl implements BeanAutoDao {
                 Map.Entry<String, List> entry = it.next();
                 System.out.println("key= " + entry.getKey() + " and value= " +org.apache.commons.lang3.StringUtils.join(entry.getValue(),","));
 //文件名
-                String fileName = NameUtil.fileName(entry.getKey())+"Bean";
+                String fileName = NameUtil.fileName(entry.getKey());
                 String tableName = NameUtil.fileName(entry.getKey());
 //获得每个表的所有列结构
                 List<Column> columns =entry.getValue();
