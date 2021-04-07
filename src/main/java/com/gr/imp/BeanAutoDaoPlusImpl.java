@@ -50,7 +50,6 @@ public class BeanAutoDaoPlusImpl implements BeanAutoDao {
                 StringBuffer importCon=new StringBuffer();
                 importCon.append("import"+"\t"+"javax.persistence.*;\n");
 
-                importCon.append("import"+"\t"+ConfigUtil.beanPath+"."+ConfigUtil.beanHead+"_TABLE;\n");
                 importCon.append("import"+" javax.persistence.Entity;\n");
                 importCon.append("import"+" javax.persistence.GeneratedValue;\n");
                 importCon.append("import"+" javax.persistence.GenerationType;\n");
