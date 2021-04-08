@@ -94,7 +94,7 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                  * 查询
                  */
                 classCon.append("@PostMapping\n");
-                classCon.append("public BaseResult list(PageForm pageform) {\n");
+                classCon.append("public BaseResult list(@RequestBody PageForm pageform) {\n");
                 classCon.append("\t"+"Map<String, Object> data = "+lowService+".list(pageform);\n");
                 classCon.append("\t"+"return new BaseResult(data);\n");
                 classCon.append("}\n\n");
