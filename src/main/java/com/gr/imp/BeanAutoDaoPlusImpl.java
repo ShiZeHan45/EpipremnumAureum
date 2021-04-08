@@ -134,20 +134,20 @@ public class BeanAutoDaoPlusImpl implements BeanAutoDao {
                             String radix = intToString(column.getNumPrecRadix());
 
                             String maxNum = intToString(columnSize);
-                            if(remark.contains("手机")){
-                                clasCon = "@Pattern(regexp = \"^(1(?:3\\\\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8\\\\d|9\\\\d)\\\\d{8})?$\",message = \"客户手机号码不合法\")";
-                            }else if(remark.contains("电话")){
-                                clasCon = " @Pattern(regexp = \"^(0\\\\d{2,3}-?\\\\d{7,8})?$\",message = \""+remark+"不合法\")";
-                            }else if(dateType.equals("Double")){
-                                clasCon = "@DecimalMin(value=\"-"+radix+"."+digits+"\",message=\""+remark+"不能小于{value}\")\n @DecimalMax(value=\""+radix+"."+digits+"\",message=\""+remark+"不能大于{value}\")";
-                                clasCon = isNullCon + clasCon;
-                            }else if(dateType.equals("Integer")){
-                                clasCon = "@Min(value=Integer.MIN_VALUE,message=\""+remark+"不能小于{value}\")\n@Max(value=Integer.MAX_VALUE,message=\""+remark+"不能大于{value}\")";
-                                clasCon = isNullCon + clasCon;
-                            }else if(dateType.equals("String")){
-                                clasCon = "@Size(min=0, max="+columnSize+",message=\""+remark+"不合法\")";
-                                clasCon = notBlankCon + clasCon;
-                            }
+//                            if(remark.contains("手机")){
+//                                clasCon = "@Pattern(regexp = \"^(1(?:3\\\\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8\\\\d|9\\\\d)\\\\d{8})?$\",message = \"客户手机号码不合法\")";
+//                            }else if(remark.contains("电话")){
+//                                clasCon = " @Pattern(regexp = \"^(0\\\\d{2,3}-?\\\\d{7,8})?$\",message = \""+remark+"不合法\")";
+//                            }else if(dateType.equals("Double")){
+//                                clasCon = "@DecimalMin(value=\"-"+radix+"."+digits+"\",message=\""+remark+"不能小于{value}\")\n @DecimalMax(value=\""+radix+"."+digits+"\",message=\""+remark+"不能大于{value}\")";
+//                                clasCon = isNullCon + clasCon;
+//                            }else if(dateType.equals("Integer")){
+//                                clasCon = "@Min(value=Integer.MIN_VALUE,message=\""+remark+"不能小于{value}\")\n@Max(value=Integer.MAX_VALUE,message=\""+remark+"不能大于{value}\")";
+//                                clasCon = isNullCon + clasCon;
+//                            }else if(dateType.equals("String")){
+//                                clasCon = "@Size(min=0, max="+columnSize+",message=\""+remark+"不合法\")";
+//                                clasCon = notBlankCon + clasCon;
+//                            }
 
 //                            classCon.append("\t "+"private "+clasCon+"  @Column(name=\""+columns.get(j).getColumnName()+"\")\t "+dateType+"\t "+code+";\n");
                             classCon.append("\t "+"private "+clasCon+" "+dateType+"\t "+code+";\n");
