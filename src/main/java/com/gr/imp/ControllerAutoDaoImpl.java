@@ -75,6 +75,8 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                 classHead.append("@RestController\n");
 //                classHead.append("@ApiController(\""+ConfigUtil.moudleName+"模块\")\n");
                 classHead.append("@RequestMapping({\"/"+lowBeanName+"\"})\n");
+                classHead.append("@Api(description = \"接口文档\"))\n");
+
                 String className ="public"+"\t"+"class"+"\t"+fileName+"\t"+"{\n\n";
 //拼接(实体类）文件内容
                 StringBuffer classCon =new StringBuffer();
@@ -86,6 +88,7 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                  */
 //                classCon.append("@ApiAction(name = \""+ConfigUtil.moudleName+"列表\")\n");
                 classCon.append("@PostMapping(path = \"/get/{id:\\\\d+}\")\n");
+                classCon.append("@ApiOperation(value = \"详情查询\",notes = \"根据id查询\")\n");
                 classCon.append("public BaseResult get(@PathVariable(\"id\") Integer id) {\n");
                 classCon.append("\t"+"return "+lowService+".get(id);\n");
                 classCon.append("}\n\n");
@@ -94,9 +97,9 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                  * 查询
                  */
                 classCon.append("@PostMapping\n");
-                classCon.append("public BaseResult list(@RequestBody PageForm pageform) {\n");
-                classCon.append("\t"+"Map<String, Object> data = "+lowService+".list(pageform);\n");
-                classCon.append("\t"+"return new BaseResult(data);\n");
+                classCon.append("@ApiOperation(value = \"列表查询\",notes = \"根据条件查询\")\n");
+                classCon.append("public PageResult<"+baseName+"> list(@RequestBody PageForm pageform) {\n");
+                classCon.append("\t"+"return "+lowService+".list(pageform);;\n");
                 classCon.append("}\n\n");
 
 
@@ -105,8 +108,8 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                 /**
                  * 保存
                  */
-//                classCon.append("@ApiAction(name = \"保存"+ConfigUtil.moudleName+"\")\n");
                 classCon.append("@PostMapping(path=\"/save\")\n");
+                classCon.append("@ApiOperation(value = \"保存\",notes = \"保存\")\n");
                 classCon.append("public BaseResult save(@RequestBody @Validated "+baseForm+" form, BindingResult errForm) {\n");
                 classCon.append("\t"+"BaseResult result = new BaseResult();\n");
                 classCon.append("\t"+" if (errForm.hasErrors()) {\n");
@@ -115,7 +118,7 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                 classCon.append("\t\t\t"+"return result;\n");
                 classCon.append("\t\t"+"}\n");
                 classCon.append("\t"+"}\n");
-                classCon.append("\t"+lowService+".save(form, result);\n");
+                classCon.append("\tresult.setData("+lowService+".save(form, result));\n");
                 classCon.append("\t"+" return result;\n");
                 classCon.append("}\n\n");
 
@@ -124,6 +127,7 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
 //                 */
 //                classCon.append("@ApiAction(name = \"编辑"+ConfigUtil.moudleName+"\")\n");
                 classCon.append("@PutMapping(path = {\"/{id:"+"\\"+"\\"+"d+}\"})\n");
+                classCon.append("@ApiOperation(value = \"编辑\",notes = \"编辑\")\n");
                 classCon.append("public BaseResult edit(@PathVariable(\"id\") int id, @RequestBody @Validated "+baseForm+" form, BindingResult errForm) {\n");
                 classCon.append("\t"+" BaseResult result = new BaseResult();\n");
                 classCon.append("\t"+" if (errForm.hasErrors()) {\n");
@@ -133,8 +137,7 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                 classCon.append("\t\t"+"}\n");
                 classCon.append("\t"+"}\n");
                 classCon.append("\t"+"form.setId(id);\n");
-                classCon.append("\t"+lowService+".edit(form);\n");
-                classCon.append("\t"+" return result;\n");
+                classCon.append("\t return "+lowService+".edit(form);\n");
                 classCon.append("}\n\n");
 
                 /**
@@ -142,6 +145,7 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                  */
 //                classCon.append("@ApiAction(name = \"删除"+ConfigUtil.moudleName+"\")\n");
                 classCon.append("@DeleteMapping(path = {\"/{id:"+"\\"+"\\"+"d+}\"})\n");
+                classCon.append("@ApiOperation(value = \"删除\",notes = \"根据id删除\")\n");
                 classCon.append("public BaseResult del(@PathVariable(\"id\") int id) {\n");
                 classCon.append("\t"+lowService+".delete(id);\n");
                 classCon.append("\t return new BaseResult();\n");

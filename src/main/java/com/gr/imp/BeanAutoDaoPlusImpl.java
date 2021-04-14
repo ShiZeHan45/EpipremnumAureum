@@ -50,6 +50,7 @@ public class BeanAutoDaoPlusImpl implements BeanAutoDao {
                 StringBuffer importCon=new StringBuffer();
                 importCon.append("import"+"\t"+"javax.persistence.*;\n");
                 importCon.append("import"+"\tjavax.validation.constraints.*;\n\n");
+                importCon.append("import"+"\tio.swagger.annotations.ApiModelProperty;\n\n");
 
                 String beanHead = "@Entity(name= \""+entry.getKey()+"\")\n";
                 String className ="public"+"\t"+"class"+"\t"+fileName+"{\n\n";
@@ -152,6 +153,7 @@ public class BeanAutoDaoPlusImpl implements BeanAutoDao {
 
 
 //                            classCon.append("\t "+"private "+clasCon+"  @Column(name=\""+columns.get(j).getColumnName()+"\")\t "+dateType+"\t "+code+";\n");
+                            classCon.append("\t  @ApiModelProperty(notes = \""+remark+"\")");
                             classCon.append("\t "+"private "+clasCon+" "+dateType+"\t "+code+";\n");
                         }
                         String getSetName=code.substring(0,1).toUpperCase()+code.substring(1);

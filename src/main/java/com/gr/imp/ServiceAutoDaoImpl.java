@@ -121,17 +121,16 @@ public class ServiceAutoDaoImpl implements ServiceAutoDao {
                 /**
                  * 查询
                  */
-                classCon.append("public" + "\tMap<String, Object>\tlist(PageForm\tpageForm" + "){\n");
-                classCon.append("\t" + "Map<String, Object> resultMap = new HashMap();\n");
+                classCon.append("public" + "\tPageResult<"+baseName+">\tlist(PageForm\tpageForm" + "){\n");
                 classCon.append("\t" + "Map<String, String> paramKeyMap = new HashMap();\n");
-                classCon.append("\t" + "return page(pageForm, paramKeyMap, " + StringUtils.toLowerCaseFirstOne(baseName) + "Repository" + ", resultMap, new Specification[0]);\n");
+                classCon.append("\t" + "return page(pageForm, paramKeyMap, " + StringUtils.toLowerCaseFirstOne(baseName) + "Repository" + ");\n");
                 classCon.append("}\n\n");
 
                 /**
                  * 查询
                  */
-                classCon.append("public" + "\tBaseResult\tget(Integer\tid" + "){\n");
-                classCon.append("\t return  new BaseResult(" +  tableName + "Repository.findById(id).orElseThrow(() -> new BusinessException(\"找不到对应记录\")));");
+                classCon.append("public" + "\tBaseResult<"+baseName+">\tget(Integer\tid" + "){\n");
+                classCon.append("\t return  new BaseResult<>(" +  tableName + "Repository.findById(id).orElseThrow(() -> new BusinessException(\"找不到对应记录\")));");
                 classCon.append("}\n\n");
 
                 StringBuffer content = new StringBuffer();
