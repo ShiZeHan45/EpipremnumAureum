@@ -61,6 +61,8 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                 importCon.append("import"+"\t"+"org.springframework.validation.BindingResult;\n");
                 importCon.append("import"+"\t"+"org.springframework.validation.ObjectError;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.DeleteMapping;\n");
+                importCon.append("import"+"\t"+"io.swagger.annotations.Api;\n");
+                importCon.append("import"+"\t"+"io.swagger.annotations.ApiOperation;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.PutMapping;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.GetMapping;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.PathVariable;\n");
@@ -98,7 +100,7 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                  */
                 classCon.append("@PostMapping\n");
                 classCon.append("@ApiOperation(value = \"列表查询\",notes = \"根据条件查询\")\n");
-                classCon.append("public PageResult<"+baseName+"> list(@RequestBody PageForm pageform) {\n");
+                classCon.append("public PageResult<"+baseName+"> list(@RequestBody(required = false) PageForm pageform) {\n");
                 classCon.append("\t"+"return "+lowService+".list(pageform);;\n");
                 classCon.append("}\n\n");
 
