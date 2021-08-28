@@ -77,8 +77,7 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                 classHead.append("@RestController\n");
 //                classHead.append("@ApiController(\""+ConfigUtil.moudleName+"模块\")\n");
                 classHead.append("@RequestMapping({\"/"+lowBeanName+"\"})\n");
-                classHead.append("@Api(description = \"接口文档\"))\n");
-
+                classHead.append("@Api(tags = \"接口文档\")\n");
                 String className ="public"+"\t"+"class"+"\t"+fileName+"\t"+"{\n\n";
 //拼接(实体类）文件内容
                 StringBuffer classCon =new StringBuffer();
@@ -101,10 +100,8 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                 classCon.append("@PostMapping\n");
                 classCon.append("@ApiOperation(value = \"列表查询\",notes = \"根据条件查询\")\n");
                 classCon.append("public PageResult<"+baseName+"> list(@RequestBody(required = false) PageForm pageform) {\n");
-                classCon.append("\t"+"return "+lowService+".list(pageform);;\n");
+                classCon.append("\t"+"return "+lowService+".list(pageform);\n");
                 classCon.append("}\n\n");
-
-
 
 
                 /**
@@ -115,12 +112,9 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                 classCon.append("public BaseResult save(@RequestBody @Validated "+baseForm+" form, BindingResult errForm) {\n");
                 classCon.append("\t"+"BaseResult result = new BaseResult();\n");
                 classCon.append("\t"+" if (errForm.hasErrors()) {\n");
-                classCon.append("\t\t"+"for (ObjectError error : errForm.getAllErrors()) {\n");
-                classCon.append("\t\t\t"+" result.addError(error.getDefaultMessage());\n");
-                classCon.append("\t\t\t"+"return result;\n");
-                classCon.append("\t\t"+"}\n");
+                classCon.append("\t\t"+"throw new BusinessException(errForm.getAllErrors().get(0).getDefaultMessage());\n");
                 classCon.append("\t"+"}\n");
-                classCon.append("\tresult.setData("+lowService+".save(form, result));\n");
+                classCon.append("\tresult.setData("+lowService+".save(form));\n");
                 classCon.append("\t"+" return result;\n");
                 classCon.append("}\n\n");
 
@@ -133,10 +127,7 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                 classCon.append("public BaseResult edit(@PathVariable(\"id\") int id, @RequestBody @Validated "+baseForm+" form, BindingResult errForm) {\n");
                 classCon.append("\t"+" BaseResult result = new BaseResult();\n");
                 classCon.append("\t"+" if (errForm.hasErrors()) {\n");
-                classCon.append("\t\t"+"for (ObjectError error : errForm.getAllErrors()) {\n");
-                classCon.append("\t\t\t"+" result.addError(error.getDefaultMessage());\n");
-                classCon.append("\t\t\t"+"return result;\n");
-                classCon.append("\t\t"+"}\n");
+                classCon.append("\t\t"+"throw new BusinessException(errForm.getAllErrors().get(0).getDefaultMessage());\n");
                 classCon.append("\t"+"}\n");
                 classCon.append("\t"+"form.setId(id);\n");
                 classCon.append("\t return "+lowService+".edit(form);\n");

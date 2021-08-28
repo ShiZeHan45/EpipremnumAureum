@@ -52,7 +52,8 @@ public class BeanAutoDaoPlusImpl implements BeanAutoDao {
                 importCon.append("import"+"\tjavax.validation.constraints.*;\n\n");
                 importCon.append("import"+"\tio.swagger.annotations.ApiModelProperty;\n\n");
 
-                String beanHead = "@Entity(name= \""+entry.getKey()+"\")\n";
+                String table = "@Table(name= \""+entry.getKey()+"\")\n";
+                String entity = "@Entity\n";
                 String className ="public"+"\t"+"class"+"\t"+fileName+"{\n\n";
                 StringBuffer classCon =new StringBuffer();
                 StringBuffer gettersCon = new StringBuffer();
@@ -153,7 +154,7 @@ public class BeanAutoDaoPlusImpl implements BeanAutoDao {
 
 
 //                            classCon.append("\t "+"private "+clasCon+"  @Column(name=\""+columns.get(j).getColumnName()+"\")\t "+dateType+"\t "+code+";\n");
-                            classCon.append("\t  @ApiModelProperty(notes = \""+remark+"\")");
+//                            classCon.append("\t  @ApiModelProperty(notes = \""+remark+"\")");
                             classCon.append("\t "+"private "+clasCon+" "+dateType+"\t "+code+";\n");
                         }
                         String getSetName=code.substring(0,1).toUpperCase()+code.substring(1);
@@ -190,7 +191,8 @@ public class BeanAutoDaoPlusImpl implements BeanAutoDao {
                 StringBuffer content=new StringBuffer();
                 content.append(packageCon);
                 content.append(importCon.toString());
-                content.append(beanHead);
+                content.append(table);
+                content.append(entity);
                 content.append(className);
                 content.append(classCon.toString());
                 content.append(gettersCon.toString());
