@@ -43,7 +43,9 @@ public class ConfigUtil {
     public static String apiDocFlag;
     public static String isTemplate;
     public static String apiDocPath;
-
+    public static String voFlag;
+    public static String voPackage;
+    public static String voPath;
 //    //获取配置文件参数并加载驱动
     static{
         try {
@@ -80,7 +82,9 @@ public class ConfigUtil {
             isTemplate=pro.getProperty("isTemplate");
             apiDocFlag=pro.getProperty("apiDocFlag");
             apiDocPath=pro.getProperty("apiDocPath");
-
+            voPackage=pro.getProperty("voPackage");
+            voFlag=pro.getProperty("voFlag");
+            voPath=pro.getProperty("voPath");
         } catch (IOException e) {
 // TODO Auto-generated catch block
             e.printStackTrace();

@@ -49,12 +49,11 @@ public class BeanAutoDaoPlusImpl implements BeanAutoDao {
                 String packageCon ="package"+"\t"+beanPackage+";\n\n";
                 StringBuffer importCon=new StringBuffer();
                 importCon.append("import"+"\t"+"javax.persistence.*;\n");
-                importCon.append("import"+"\tjavax.validation.constraints.*;\n\n");
-                importCon.append("import"+"\tio.swagger.annotations.ApiModelProperty;\n\n");
-
+                importCon.append("import"+"\t"+"gddxit.waterhub.data.common.entitylistener.BaseEntity;\n");
+                importCon.append("import"+"\t"+"gddxit.waterhub.data.common.tenant.MultiTenantSupport;\n");
                 String table = "@Table(name= \""+entry.getKey()+"\")\n";
                 String entity = "@Entity\n";
-                String className ="public"+"\t"+"class"+"\t"+fileName+"{\n\n";
+                String className ="public"+"\t"+"class"+"\t"+fileName+"  extends MultiTenantSupport implements BaseEntity{\n\n";
                 StringBuffer classCon =new StringBuffer();
                 StringBuffer gettersCon = new StringBuffer();
                 StringBuffer settersCon = new StringBuffer();
@@ -102,59 +101,33 @@ public class BeanAutoDaoPlusImpl implements BeanAutoDao {
                         continue;
                     }else{
                         if("Date".equals(dateType)){
-                            if(importCon.indexOf("java.util.Date")==-1){
-                                importCon.append("import"+"\t"+" java.util.Date;\n\n");
+                            if(importCon.indexOf("java.time.LocalDate")==-1){
+                                importCon.append("import"+"\t"+" java.time.LocalDate;\n\n");
                             }
                         }
 //有Timestamp类型的数据需导包
-                        if("Timestamp".equals(dateType)){
-                            if(importCon.indexOf("java.sql.Timestamp")==-1){
-                                importCon.append("import"+"\t"+" java.sql.Timestamp;\n\n");
+                        if("LocalDateTime".equals(dateType)){
+                            if(importCon.indexOf("java.time.LocalDateTime")==-1){
+                                importCon.append("import"+"\t"+" java.time.LocalDateTime;\n\n");
                             }
                         }
+                        if("LocalTime".equals(dateType)){
+                            if(importCon.indexOf("java.time.LocalTime")==-1){
+                                importCon.append("import"+"\t"+" java.time.LocalTime;\n\n");
+                            }
+                        }
+                        if(code.equals("tenantId")){
+                            continue;
+                        }
+
                         if(code.equals("id")){
                             classCon.append("/**\n*"+remark+"\n*\n*/");
                             classCon.append("\t "+"private"+"\t"+"@Column(name=\""+columns.get(j).getColumnName()+"\")\t "+"@Id @GeneratedValue(strategy = GenerationType.IDENTITY)"+"\t "+dateType+"\t "+code+";\n");
                         }else{
                             classCon.append("/**\n*"+remark+"\n*\n*/");
                             String clasCon = "";
-//                            /**
-//                             * 身份证
-//                             * 手机
-//                             * 电话
-//                             * Integer
-//                             * Double
-//                             *
-//                             */
                             String isNullCon = "";
                             String notBlankCon = "";
-                            if(!isNull){
-                                isNullCon = "@NotNull(message=\""+remark+"不能为空\")\n";
-                                notBlankCon = "@NotBlank(message=\""+remark+"不能为空\")\n";
-                                if(dateType.equals("Double")){
-//                                clasCon = "@DecimalMin(value=\"-"+radix+"."+digits+"\",message=\""+remark+"不能小于{value}\")\n @DecimalMax(value=\""+radix+"."+digits+"\",message=\""+remark+"不能大于{value}\")";
-                                    clasCon = isNullCon + clasCon;
-                                }else if(dateType.equals("Integer")){
-//                                clasCon = "@Min(value=Integer.MIN_VALUE,message=\""+remark+"不能小于{value}\")\n@Max(value=Integer.MAX_VALUE,message=\""+remark+"不能大于{value}\")";
-                                    clasCon = isNullCon + clasCon;
-                                }else if(dateType.equals("String")){
-//                                clasCon = "@Size(min=0, max="+columnSize+",message=\""+remark+"不合法\")";
-                                    clasCon = notBlankCon + clasCon;
-                                }
-                            }
-//                            String digits = intToString(column.getDecimalDigits());
-//                            String radix = intToString(column.getNumPrecRadix());
-//
-//                            String maxNum = intToString(columnSize);
-//                            if(remark.contains("手机")){
-//                                clasCon = "@Pattern(regexp = \"^(1(?:3\\\\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8\\\\d|9\\\\d)\\\\d{8})?$\",message = \"客户手机号码不合法\")";
-//                            }else if(remark.contains("电话")){
-//                                clasCon = " @Pattern(regexp = \"^(0\\\\d{2,3}-?\\\\d{7,8})?$\",message = \""+remark+"不合法\")";
-//                            }else
-
-
-//                            classCon.append("\t "+"private "+clasCon+"  @Column(name=\""+columns.get(j).getColumnName()+"\")\t "+dateType+"\t "+code+";\n");
-//                            classCon.append("\t  @ApiModelProperty(notes = \""+remark+"\")");
                             classCon.append("\t "+"private "+clasCon+" "+dateType+"\t "+code+";\n");
                         }
                         String getSetName=code.substring(0,1).toUpperCase()+code.substring(1);

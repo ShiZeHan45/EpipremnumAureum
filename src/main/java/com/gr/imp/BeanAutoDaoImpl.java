@@ -48,9 +48,11 @@ public class BeanAutoDaoImpl implements BeanAutoDao {
                 String packageCon ="package"+"\t"+beanPackage+";\n\n";
                 StringBuffer importCon=new StringBuffer();
                 importCon.append("import"+"\t"+"javax.persistence.*;\n");
+                importCon.append("import"+"\t"+"gddxit.waterhub.data.common.entitylistener.BaseEntity;\n");
+                importCon.append("import"+"\t"+"gddxit.waterhub.data.common.tenant.MultiTenantSupport;\n");
                 String table = "@Table(name= "+list.get(i).getTableName()+")\n";
                 String entity = "@Entity\n";
-                String className ="public"+"\t"+"class"+"\t"+fileName+"{\n\n";
+                String className ="public"+"\t"+"class"+"\t"+fileName+"  extends MultiTenantSupport implements BaseEntity {\n\n";
                 StringBuffer classCon =new StringBuffer();
                 StringBuffer gettersCon = new StringBuffer();
                 StringBuffer settersCon = new StringBuffer();
@@ -66,16 +68,21 @@ public class BeanAutoDaoImpl implements BeanAutoDao {
                     String type = columns.get(j).getDataType();
 //将mysql数据类型转换为java数据类型
                     String dateType = DataTypeUtil.getType(type);
-//有date类型的数据需导包
-                    if("Date".equals(dateType)){
-                        if(importCon.indexOf("java.util.Date")==-1){
-                            importCon.append("import"+"\t"+" java.util.Date;\n\n");
+
+//有Timestamp类型的数据需导包
+                    if("LocalDateTime".equals(dateType)){
+                        if(importCon.indexOf("java.time.LocalDateTime")==-1){
+                            importCon.append("import"+"\t"+" java.time.LocalDateTime;\n\n");
                         }
                     }
-//有Timestamp类型的数据需导包
-                    if("Timestamp".equals(dateType)){
-                        if(importCon.indexOf("java.sql.Timestamp")==-1){
-                            importCon.append("import"+"\t"+" java.sql.Timestamp;\n\n");
+                    if("LocalDate".equals(dateType)){
+                        if(importCon.indexOf("java.time.LocalDate")==-1){
+                            importCon.append("import"+"\t"+" java.time.LocalDate;\n\n");
+                        }
+                    }
+                    if("Time".equals(dateType)){
+                        if(importCon.indexOf("java.time.Time")==-1){
+                            importCon.append("import"+"\t"+" java.time.Time;\n\n");
                         }
                     }
 

@@ -47,20 +47,17 @@ public class DataTypeUtil {
         if("varchar".equals(StringUtils.substringBefore(dataType, "("))){
             type="String";
         }
-        if("date".equals(StringUtils.substringBefore(dataType, "("))){
-            type="Date";
-        }
-        if("time".equals(StringUtils.substringBefore(dataType, "("))){
-            type="Date";
-        }
-        if("year".equals(StringUtils.substringBefore(dataType, "("))){
-            type="Date";
-        }
         if("timestamp".equals(StringUtils.substringBefore(dataType, "("))){
-            type="Timestamp";
+            type="LocalDateTime";
         }
         if("datetime".equals(StringUtils.substringBefore(dataType, "("))){
-            type="Timestamp";
+            type="LocalDateTime";
+        }
+        if("date".equals(StringUtils.substringBefore(dataType, "("))){
+            type="LocalDate";
+        }
+        if("time".equals(StringUtils.substringBefore(dataType, "("))){
+            type="LocalTime";
         }
         if("tinytext".equals(StringUtils.substringBefore(dataType, "("))){
             type="String";

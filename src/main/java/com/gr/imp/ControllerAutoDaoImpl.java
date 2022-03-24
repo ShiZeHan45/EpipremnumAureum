@@ -56,20 +56,18 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                 importCon.append("import"+"\t"+"gddxit.waterhub.data.form.PageForm;\n");
                 importCon.append("import"+"\t"+ConfigUtil.serviceImplPackage+"."+baseService+";\n");
                 importCon.append("import"+"\t"+"gddxit.waterhub.cloud.results.BaseResult;\n");
+                importCon.append("import" + "\t" + "org.slf4j.Logger;\n");
+                importCon.append("import" + "\t" + "org.slf4j.LoggerFactory;\n");
                 importCon.append("import"+"\t"+"org.springframework.beans.factory.annotation.Autowired;\n");
                 importCon.append("import"+"\t"+"org.springframework.validation.annotation.Validated;\n");
                 importCon.append("import"+"\t"+"org.springframework.validation.BindingResult;\n");
                 importCon.append("import"+"\t"+"org.springframework.validation.ObjectError;\n");
-                importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.DeleteMapping;\n");
                 importCon.append("import"+"\t"+"io.swagger.annotations.Api;\n");
                 importCon.append("import"+"\t"+"io.swagger.annotations.ApiOperation;\n");
-                importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.PutMapping;\n");
-                importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.GetMapping;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.PathVariable;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.PostMapping;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.RequestBody;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.RequestMapping;\n");
-                importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.ResponseBody;\n");
                 importCon.append("import"+"\t"+"org.springframework.web.bind.annotation.RestController;\n");
                 importCon.append("import"+"\t"+"java.util.List;\n");
                 importCon.append("import"+"\t"+"java.util.Map;\n\n");
@@ -91,58 +89,59 @@ public class ControllerAutoDaoImpl implements ControllerAutoDao {
                 classCon.append("@PostMapping(path = \"/get/{id:\\\\d+}\")\n");
                 classCon.append("@ApiOperation(value = \"详情查询\",notes = \"根据id查询\")\n");
                 classCon.append("public BaseResult get(@PathVariable(\"id\") Integer id) {\n");
-                classCon.append("\t"+"return "+lowService+".get(id);\n");
+                classCon.append("\t"+"return new BaseResult("+lowService+".get(id));\n");
                 classCon.append("}\n\n");
 
                 /**
                  * 查询
                  */
+//                PageResult.build(billingHandleService.list(pageForm), BillBillingHandleRecordListVO::new)
                 classCon.append("@PostMapping\n");
                 classCon.append("@ApiOperation(value = \"列表查询\",notes = \"根据条件查询\")\n");
                 classCon.append("public PageResult<"+baseName+"> list(@RequestBody(required = false) PageForm pageform) {\n");
-                classCon.append("\t"+"return "+lowService+".list(pageform);\n");
+                classCon.append("\t"+"return PageResult.build("+lowService+".list(pageform), "+upBeanName+"ListVO::new);\n");
                 classCon.append("}\n\n");
 
-
-                /**
-                 * 保存
-                 */
-                classCon.append("@PostMapping(path=\"/save\")\n");
-                classCon.append("@ApiOperation(value = \"保存\",notes = \"保存\")\n");
-                classCon.append("public BaseResult save(@RequestBody @Validated "+baseForm+" form, BindingResult errForm) {\n");
-                classCon.append("\t"+"BaseResult result = new BaseResult();\n");
-                classCon.append("\t"+" if (errForm.hasErrors()) {\n");
-                classCon.append("\t\t"+"throw new BusinessException(errForm.getAllErrors().get(0).getDefaultMessage());\n");
-                classCon.append("\t"+"}\n");
-                classCon.append("\tresult.setData("+lowService+".save(form));\n");
-                classCon.append("\t"+" return result;\n");
-                classCon.append("}\n\n");
 
 //                /**
-//                 * 编辑
+//                 * 保存
 //                 */
-//                classCon.append("@ApiAction(name = \"编辑"+ConfigUtil.moudleName+"\")\n");
-                classCon.append("@PutMapping(path = {\"/{id:"+"\\"+"\\"+"d+}\"})\n");
-                classCon.append("@ApiOperation(value = \"编辑\",notes = \"编辑\")\n");
-                classCon.append("public BaseResult edit(@PathVariable(\"id\") int id, @RequestBody @Validated "+baseForm+" form, BindingResult errForm) {\n");
-                classCon.append("\t"+" BaseResult result = new BaseResult();\n");
-                classCon.append("\t"+" if (errForm.hasErrors()) {\n");
-                classCon.append("\t\t"+"throw new BusinessException(errForm.getAllErrors().get(0).getDefaultMessage());\n");
-                classCon.append("\t"+"}\n");
-                classCon.append("\t"+"form.setId(id);\n");
-                classCon.append("\t return "+lowService+".edit(form);\n");
-                classCon.append("}\n\n");
-
-                /**
-                 * 删除
-                 */
-//                classCon.append("@ApiAction(name = \"删除"+ConfigUtil.moudleName+"\")\n");
-                classCon.append("@DeleteMapping(path = {\"/{id:"+"\\"+"\\"+"d+}\"})\n");
-                classCon.append("@ApiOperation(value = \"删除\",notes = \"根据id删除\")\n");
-                classCon.append("public BaseResult del(@PathVariable(\"id\") int id) {\n");
-                classCon.append("\t"+lowService+".delete(id);\n");
-                classCon.append("\t return new BaseResult();\n");
-                classCon.append("}\n\n");
+//                classCon.append("@PostMapping(path=\"/save\")\n");
+//                classCon.append("@ApiOperation(value = \"保存\",notes = \"保存\")\n");
+//                classCon.append("public BaseResult save(@RequestBody @Validated "+baseForm+" form, BindingResult errForm) {\n");
+//                classCon.append("\t"+"BaseResult result = new BaseResult();\n");
+//                classCon.append("\t"+" if (errForm.hasErrors()) {\n");
+//                classCon.append("\t\t"+"throw new BusinessException(errForm.getAllErrors().get(0).getDefaultMessage());\n");
+//                classCon.append("\t"+"}\n");
+//                classCon.append("\tresult.setData("+lowService+".save(form));\n");
+//                classCon.append("\t"+" return result;\n");
+//                classCon.append("}\n\n");
+//
+////                /**
+////                 * 编辑
+////                 */
+////                classCon.append("@ApiAction(name = \"编辑"+ConfigUtil.moudleName+"\")\n");
+//                classCon.append("@PutMapping(path = {\"/{id:"+"\\"+"\\"+"d+}\"})\n");
+//                classCon.append("@ApiOperation(value = \"编辑\",notes = \"编辑\")\n");
+//                classCon.append("public BaseResult edit(@PathVariable(\"id\") int id, @RequestBody @Validated "+baseForm+" form, BindingResult errForm) {\n");
+//                classCon.append("\t"+" BaseResult result = new BaseResult();\n");
+//                classCon.append("\t"+" if (errForm.hasErrors()) {\n");
+//                classCon.append("\t\t"+"throw new BusinessException(errForm.getAllErrors().get(0).getDefaultMessage());\n");
+//                classCon.append("\t"+"}\n");
+//                classCon.append("\t"+"form.setId(id);\n");
+//                classCon.append("\t return "+lowService+".edit(form);\n");
+//                classCon.append("}\n\n");
+//
+//                /**
+//                 * 删除
+//                 */
+////                classCon.append("@ApiAction(name = \"删除"+ConfigUtil.moudleName+"\")\n");
+//                classCon.append("@DeleteMapping(path = {\"/{id:"+"\\"+"\\"+"d+}\"})\n");
+//                classCon.append("@ApiOperation(value = \"删除\",notes = \"根据id删除\")\n");
+//                classCon.append("public BaseResult del(@PathVariable(\"id\") int id) {\n");
+//                classCon.append("\t"+lowService+".delete(id);\n");
+//                classCon.append("\t return new BaseResult();\n");
+//                classCon.append("}\n\n");
 ///**
 // //
                 StringBuffer content=new StringBuffer();
