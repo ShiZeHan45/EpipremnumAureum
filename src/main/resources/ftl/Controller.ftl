@@ -11,7 +11,6 @@ import gddxit.waterhub.cloud.expection.BusinessException;
 import gddxit.waterhub.cloud.results.BaseResult;
 import gddxit.waterhub.cloud.results.PageResult;
 import ${voPackagePath}.${entityName}VO;
-import ${voPackagePath}.${entityName}ListVO;
 
 @RestController
 @RequestMapping({"/${entityName?uncap_first}"})
@@ -25,13 +24,13 @@ public class ${entityName}Controller{
     @PostMapping
     @ApiOperation(value = "列表查询", notes = "根据条件查询")
     public PageResult<${entityName}VO> list(@RequestBody PageForm pageform) {
-        return PageResult.build(archMeterInfoService.list(pageform),${entityName}VO::new);
+        return PageResult.build(${entityName?uncap_first}Service.list(pageform),${entityName}VO::new);
     }
 
     @PostMapping(path = "/get/{id:\\d+}")
     @ApiOperation(value = "详情查询", notes = "根据id查询")
     public BaseResult<${entityName}VO> get(@PathVariable("id") Long id) {
-        return ${entityName?uncap_first}Service.get(id);
+        return new BaseResult(new ${entityName}VO(${entityName?uncap_first}Service.get(id)));
     }
 
 }

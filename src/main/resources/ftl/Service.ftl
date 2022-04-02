@@ -22,7 +22,7 @@ public class ${entityName}Service extends JPAEntityService<${entityName}>{
     return page(pageForm, paramKeyMap, ${entityName?uncap_first}Repository);
     }
 
-    private ${entityName} get(Long id) {
+    public ${entityName} get(Long id) {
     return ${entityName?uncap_first}Repository.findById(id).orElseThrow(() -> new BusinessException(String.format("根据id【%s】找不到记录信息", id)));
     }
 
