@@ -33,5 +33,5 @@ public class ${entityName} extends MultiTenantSupport implements BaseEntity {
     public ${param.fieldType} get${param.fieldName?cap_first}(){
     return this.${param.fieldName};
     }
-
+}
 </#list>

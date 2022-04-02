@@ -5,6 +5,10 @@ import import ${repositoryPackagePath}.${entityName}Repository;
 
 import gddxit.waterhub.cloud.expection.BusinessException;
 import gddxit.waterhub.data.service.JPAEntityService;
+import	gddxit.waterhub.data.form.PageForm;
+import	java.util.HashMap;
+import	java.util.Map;
+import gddxit.waterhub.cloud.results.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

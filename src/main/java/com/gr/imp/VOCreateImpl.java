@@ -45,6 +45,7 @@ public class VOCreateImpl implements BaseCreate {
             if (!CollectionUtils.isEmpty(columns)) {
                 Map<String, Object> VOMap = new HashMap<String, Object>();
                 VOMap.put("entityName", entityName);// 实体类名
+                VOMap.put("entityPackagePath", config.getEntityPackagePath());// repository类名
                 VOMap.put("VOPackagePath", config.getVOPackagePath());// VO类名
                 List<Map<String, String>> paramsList = new ArrayList<Map<String, String>>();
                 for (Column column : columns) {

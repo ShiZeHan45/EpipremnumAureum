@@ -4,6 +4,8 @@ import java.util.*;
 import java.math.*;
 import java.time.*;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.beans.BeanUtils;
+import ${entityPackagePath}.${entityName};
 
 public class ${entityName}VO{
 
@@ -28,5 +30,5 @@ public class ${entityName}VO{
     public ${param.fieldType} get${param.fieldName?cap_first}(){
     return this.${param.fieldName};
     }
-
+}
 </#list>

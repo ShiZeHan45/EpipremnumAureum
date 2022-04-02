@@ -3,7 +3,9 @@ package ${FormPackagePath};
 import java.util.*;
 import java.math.*;
 import java.time.*;
+import org.springframework.beans.BeanUtils;
 import io.swagger.annotations.ApiModelProperty;
+import ${entityPackagePath}.${entityName};
 
 public class ${entityName}Form{
 
@@ -28,5 +30,5 @@ public class ${entityName}Form{
     public ${param.fieldType} get${param.fieldName?cap_first}(){
     return this.${param.fieldName};
     }
-
+}
 </#list>
