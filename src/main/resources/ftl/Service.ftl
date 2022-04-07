@@ -1,7 +1,7 @@
 package ${servicePackagePath};
 
-import import ${entityPackagePath}.${entityName};
-import import ${repositoryPackagePath}.${entityName}Repository;
+import ${entityPackagePath}.${entityName};
+import ${repositoryPackagePath}.${entityName}Repository;
 
 import gddxit.waterhub.cloud.expection.BusinessException;
 import gddxit.waterhub.data.service.JPAEntityService;
