@@ -50,6 +50,7 @@ public class ControllerCreateImpl implements BaseCreate {
                 controllerMap.put("controllerPackagePath", config.getControllerPackagePath());// controller类名
                 controllerMap.put("entityName", entityName);//类名
                 controllerMap.put("voPackagePath", config.getVOPackagePath());//类名
+                controllerMap.put("servicePackagePath", config.getServicePackagePath());//service路徑
                 try {
                     freemarkerService.generatorFile("Controller.ftl", controllerFilePath, entityName + "Controller.java", controllerMap);
                 } catch (Exception e) {

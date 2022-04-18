@@ -1,20 +1,14 @@
 package ${entityPackagePath};
 
 import gddxit.waterhub.data.common.entitylistener.BaseEntity;
-import gddxit.waterhub.data.common.entitylistener.BaseEntityListener;
 import gddxit.waterhub.data.common.tenant.MultiTenantSupport;
 import java.util.*;
 import java.math.*;
 import java.time.*;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Table;
 import javax.persistence.*;
 
 @Table(name="${tableName}")
 @Entity
-@EntityListeners(BaseEntityListener.class)
 public class ${entityName} extends MultiTenantSupport implements BaseEntity {
 
 <#list params as param>
@@ -36,5 +30,6 @@ public class ${entityName} extends MultiTenantSupport implements BaseEntity {
     public ${param.fieldType} get${param.fieldName?cap_first}(){
     return this.${param.fieldName};
     }
-}
+
 </#list>
+}

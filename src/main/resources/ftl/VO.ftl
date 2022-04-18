@@ -30,5 +30,6 @@ public class ${entityName}VO{
     public ${param.fieldType} get${param.fieldName?cap_first}(){
     return this.${param.fieldName};
     }
-}
+
 </#list>
+}

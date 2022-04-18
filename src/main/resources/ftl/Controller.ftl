@@ -11,6 +11,7 @@ import gddxit.waterhub.cloud.expection.BusinessException;
 import gddxit.waterhub.cloud.results.BaseResult;
 import gddxit.waterhub.cloud.results.PageResult;
 import ${voPackagePath}.${entityName}VO;
+import ${servicePackagePath}.${entityName}Service;
 
 @RestController
 @RequestMapping({"/${entityName?uncap_first}"})
