@@ -1,6 +1,7 @@
 package ${entityPackagePath};
 
 import gddxit.waterhub.data.common.entitylistener.BaseEntity;
+import gddxit.waterhub.data.common.entitylistener.BaseEntityListener;
 import gddxit.waterhub.data.common.tenant.MultiTenantSupport;
 import java.util.*;
 import java.math.*;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 
 @Table(name="${tableName}")
 @Entity
+@EntityListeners(BaseEntityListener.class)
 public class ${entityName} extends MultiTenantSupport implements BaseEntity {
 
 <#list params as param>
