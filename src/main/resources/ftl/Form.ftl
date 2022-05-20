@@ -1,4 +1,4 @@
-package ${FormPackagePath};
+package ${formPackagePath};
 
 import java.util.*;
 import java.math.*;
