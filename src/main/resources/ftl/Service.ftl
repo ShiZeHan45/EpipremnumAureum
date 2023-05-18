@@ -4,7 +4,6 @@ import ${entityPackagePath}.${entityName};
 import ${repositoryPackagePath}.${entityName}Repository;
 
 import gddxit.waterhub.cloud.expection.BusinessException;
-import gddxit.waterhub.data.service.JPAEntityService;
 import	gddxit.waterhub.data.form.PageForm;
 import	java.util.HashMap;
 import	java.util.Map;
@@ -13,13 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ${entityName}Service extends JPAEntityService<${entityName}>{
+public class ${entityName}Service {
     @Autowired
     private ${entityName}Repository ${entityName?uncap_first}Repository;
 
     public PageResult<${entityName}> list(PageForm pageForm) {
     Map<String, String> paramKeyMap = new HashMap<>();
-    return page(pageForm, paramKeyMap, ${entityName?uncap_first}Repository);
+    return ${entityName?uncap_first}Repository.page(pageForm, paramKeyMap);
     }
 
     public ${entityName} get(Long id) {

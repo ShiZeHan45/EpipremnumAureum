@@ -17,11 +17,7 @@ public class ${entityName}Form{
     private ${param.fieldType?cap_first} ${param.fieldName};
 
 </#list>
-    public ${entityName}VO(${entityName} ${entityName?uncap_first}) {
-    BeanUtils.copyProperties(${entityName?uncap_first},this);
-    }
-    public ${entityName}VO() {
-    }
+
 <#list params as param>
     public void set${param.fieldName?cap_first}(${param.fieldType} ${param.fieldName}){
     this.${param.fieldName} = ${param.fieldName};
